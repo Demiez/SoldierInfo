@@ -23,11 +23,21 @@ namespace SoldierInfo.API
         }
 
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllSoldiers()
         {
             List<Soldier> soldiers = _context.getSoldiers();
             return Ok(soldiers);
+        }
+
+        [HttpGet("add")]
+        public async Task<IActionResult> AddSoldier()
+        {
+            var soldier = new Soldier { Name = "Jane" };
+            await _context.Soldiers.AddAsync(soldier);
+            var answer = await _context.SaveChangesAsync();
+            _logger.LogInformation($"Added soldier {soldier.Name} with id:{answer}");
+            return Ok(answer);
         }
     }
 }

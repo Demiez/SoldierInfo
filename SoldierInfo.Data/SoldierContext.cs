@@ -16,7 +16,7 @@ namespace SoldierInfo.Data
 
         public SoldierContext(DbContextOptions<SoldierContext> options) : base(options)
         {
-            SeedSoldiers();
+            //SeedSoldiers();
         }
 
         private void SeedSoldiers()
@@ -44,7 +44,9 @@ namespace SoldierInfo.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(GetLoggerFactory());
+            optionsBuilder
+                .UseLoggerFactory(GetLoggerFactory())
+                .EnableSensitiveDataLogging();
         }
 
         public List<Soldier> getSoldiers() => Soldiers.Local.ToList<Soldier>();
