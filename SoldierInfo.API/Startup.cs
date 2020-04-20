@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using SoldierInfo.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace SoldierInfo.API
 {
@@ -22,13 +23,16 @@ namespace SoldierInfo.API
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(
+            IServiceCollection services
+            )
         {
             var connectionString = Configuration.GetConnectionString("SoldierPgSqlConnection");
 
             services.AddDbContext<SoldierContext>(
                 options => options.UseNpgsql(connectionString)
                 );
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,8 +48,10 @@ namespace SoldierInfo.API
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("Soldiers Info API");
                 });
+
+                endpoints.MapControllers();
             });
         }
     }

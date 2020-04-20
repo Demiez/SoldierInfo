@@ -1,15 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using SoldierInfo.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SoldierInfo.Data
 {
     public class SoldierContext : DbContext
     {
+        public DbSet<Soldier> Soldiers { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Battle> Battles { get; set; }
+
         public SoldierContext(DbContextOptions<SoldierContext> options) : base(options)
-        {}
+        {
+            SeedSoldiers();
+        }
+
+        private void SeedSoldiers()
+        {
+            Soldiers.Add(new Soldier { Id = 1, Name = "Ivan" });
+            Soldiers.Add(new Soldier { Id = 2, Name = "Vasyl" });
+        }
 
         private ILoggerFactory GetLoggerFactory()
         {
@@ -22,10 +36,6 @@ namespace SoldierInfo.Data
                     .GetService<ILoggerFactory>();
         }
 
-        public DbSet<Soldier> Soldiers { get; set; }
-        public DbSet<Quote> Quotes { get; set; }
-        public DbSet<Battle> Battles { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SoldierBattle>()
@@ -36,5 +46,7 @@ namespace SoldierInfo.Data
         {
             optionsBuilder.UseLoggerFactory(GetLoggerFactory());
         }
+
+        public List<Soldier> getSoldiers() => Soldiers.Local.ToList<Soldier>();
     }
 }
