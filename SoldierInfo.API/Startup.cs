@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using SoldierInfo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace SoldierInfo.API
 {
@@ -33,6 +34,11 @@ namespace SoldierInfo.API
                 options => options.UseNpgsql(connectionString)
                 );
             services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1.01", new OpenApiInfo { Title = "Soldier Info API", Version = "v1.01" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,6 +47,13 @@ namespace SoldierInfo.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Soldier Info API v.1.01");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
