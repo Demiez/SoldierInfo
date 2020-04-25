@@ -48,11 +48,18 @@ namespace SoldierInfo.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            var SwaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(SwaggerOptions);
+
+            app.UseSwagger(option =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Soldier Info API v.1.01");
-                c.RoutePrefix = string.Empty;
+                option.RouteTemplate = SwaggerOptions.JsonRoute;
+            });
+
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(SwaggerOptions.UiEndpoint, SwaggerOptions.Description);
+                option.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();

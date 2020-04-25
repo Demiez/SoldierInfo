@@ -39,5 +39,22 @@ namespace SoldierInfo.API
             _logger.LogInformation($"Added soldier {soldier.Name} with id:{answer}");
             return Ok(answer);
         }
+
+        [HttpPost]
+        public void Post([FromBody]string value)
+        {
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 }
