@@ -23,6 +23,7 @@ namespace SoldierInfo.Data
         {
             Soldiers.Add(new Soldier { Id = 1, Name = "Ivan" });
             Soldiers.Add(new Soldier { Id = 2, Name = "Vasyl" });
+            SaveChanges();
         }
 
         private ILoggerFactory GetLoggerFactory()

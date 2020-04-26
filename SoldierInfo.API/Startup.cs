@@ -37,7 +37,7 @@ namespace SoldierInfo.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.01", new OpenApiInfo { Title = "Soldier Info API", Version = "v1.01" });
+                c.SwaggerDoc("v0.8", new OpenApiInfo { Title = "Soldier Info API", Version = "v0.8" });
             });
         }
 
