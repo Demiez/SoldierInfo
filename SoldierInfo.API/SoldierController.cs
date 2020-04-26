@@ -55,7 +55,7 @@ namespace SoldierInfo.API
             return Ok(soldier);
         }
 
-        [HttpPost]
+        [HttpPost("new")]
         public async Task<IActionResult> AddSoldier(Soldier model)
         {
             List<Quote> SoldierQuotes = new List<Quote>();
@@ -99,7 +99,7 @@ namespace SoldierInfo.API
             return Ok(soldier);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("name/{id}")]
         public async Task<IActionResult> UpdateSoldierName(
             [FromRoute] int id,
             [FromQuery] string newName
